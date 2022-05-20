@@ -1,0 +1,7 @@
+- hosts: all
+  become_user: root
+  become: yes
+  roles:
+    - { role: apt, tags: apt }
+    - { role: snap, tags: snap }
+    - { role: microk8s, tags: microk8s }

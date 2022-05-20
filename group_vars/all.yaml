@@ -1,0 +1,20 @@
+microk8s:
+  addon:
+    - {name: ingress}
+    - {name: storage}
+    - {name: dns}
+    - {name: helm3}
+  version: v1.10.2
+user:
+  name: 'pyaephyohein'
+argocd:
+  version: v4.6.0
+  ingressurl: https://configs.mgou.dev/resources/values/argocd/values.yaml
+
+domain:
+  main: mgou.dev
+  subdomain: microk8s
+
+helmrepo:
+  argocd: https://argoproj.github.io/argo-helm
+

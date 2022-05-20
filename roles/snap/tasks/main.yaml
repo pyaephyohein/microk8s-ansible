@@ -1,0 +1,22 @@
+---
+- name: Install kubectl
+  become_user: root
+  snap:
+    name: kubectl
+    classic: true
+    state: present
+- name: Install microk8s
+  become_user: root
+  snap:
+    name: microk8s
+    classic: true
+    state: present
+- name: Install helm
+  become_user: root
+  snap:
+    name: helm
+    classic: true
+    state: present
+- name: install python module
+  become_user: root
+  command: pip3 install kubernetes 

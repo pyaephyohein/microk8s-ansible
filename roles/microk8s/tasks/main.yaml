@@ -1,0 +1,8 @@
+---
+- name: enable-microk8s add-on
+  become_user: root
+  command: microk8s enable {{ item.name }}
+  with_items: "{{ microk8s.addon }}"
+- name: create .kube 
+  become_user: root
+  shell: microk8s config > $HOME/.kube/config  

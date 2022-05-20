@@ -1,0 +1,30 @@
+---
+- name: Helm Repo add argocd
+  become_user: root
+  kubernetes.core.helm_repository:
+    name: argocd
+    url: "{{ helmrepo.argocd }}"
+- name: Create a k8s namespace
+  kubernetes.core.k8s:
+    name: argocd
+    api_version: v1
+    kind: Namespace
+    state: present
+- name: Add {{ domain.subdomain }}.{{ domain.main }} to argocd ingress
+  become_user: root
+  shell: wget {{argocd.ingressurl}} -O /tmp/argocd-value.yaml
+- name: Apply argocd ingress
+  become_user: root
+  ansible.builtin.replace:
+    path: /tmp/argocd-value.yaml
+    regexp: argocd.example.com
+    replace: argocd-{{ domain.subdomain }}.{{ domain.main }}
+- name: Deploy argo-cd helm chart
+  block:
+    - name: helm upgrade argocd
+      become_user: root
+      shell: helm upgrade argocd argocd/argo-cd --version v4.6.0 --namespace argocd --values /tmp/argocd-value.yaml
+  rescue:
+    - name: helm deploy argocd
+      become_user: root
+      shell: helm install argocd argocd/argo-cd --version v4.6.0 --namespace argocd --values /tmp/argocd-value.yaml

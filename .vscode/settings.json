@@ -1,0 +1,5 @@
+{
+    "yaml.schemas": {
+        "https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible.json#/definitions/playbook": "file:///home/pyaephyohein/Projects/microk8s-terraform/roles/apt/main.yaml"
+    }
+}
